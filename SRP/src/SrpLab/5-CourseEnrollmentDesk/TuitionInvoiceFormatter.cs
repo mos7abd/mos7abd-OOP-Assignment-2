@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SrpLab._5_CourseEnrollmentDesk
+{
+
+    /// <summary>
+    /// Formats tuition and VAT information as an invoice line.
+    /// </summary>
+    /// <remarks>
+    /// Reason to change: Changes when tuition, VAT, or invoice formatting rules change.
+    /// </remarks>
+    public sealed class TuitionInvoiceFormatter
+    {
+        public string Format(
+            string courseCode,
+            decimal tuition,
+            bool isSeated)
+        {
+            if (!isSeated)
+                return $"{courseCode},WAITLIST,0.00";
+
+            var vat = Math.Round(tuition * 0.14m, 2);
+
+            return $"{courseCode},TUITION,{tuition:0.00}," +
+                   $"VAT,{vat:0.00}," +
+                   $"TOTAL,{(tuition + vat):0.00}";
+        }
+    }
+}
